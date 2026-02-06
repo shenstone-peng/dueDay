@@ -1,0 +1,5 @@
+{
+  "name": "温馨孕周期计算器",
+  "description": "一个界面温馨、充满关怀的孕周计算工具，帮助准妈妈轻松掌握孕期进度，并提供由 Gemini 驱动的每周成长贴士。",
+  "requestFramePermissions": []
+}
