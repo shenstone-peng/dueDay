@@ -8,6 +8,7 @@ export interface PregnancyInfo {
   trimester: 1 | 2 | 3;
 }
 
+// Interface for AI-generated advice content
 export interface AIAdvice {
   babySize: string;
   babyDevelopment: string;

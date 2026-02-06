@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Heart } from 'lucide-react';
 import Calculator from './components/Calculator';
 import ResultDisplay from './components/ResultDisplay';
@@ -13,26 +13,27 @@ const App: React.FC = () => {
   const [advice, setAdvice] = useState<AIAdvice | null>(null);
   const [loadingAdvice, setLoadingAdvice] = useState(false);
 
+  // Handle calculation and trigger AI advice fetch
   const handleCalculate = async (lmp: Date) => {
     const info = calculatePregnancy(lmp);
     setPregnancyInfo(info);
     
-    // Reset advice while fetching
+    // Reset advice and show loading state
     setAdvice(null);
     setLoadingAdvice(true);
     
     try {
-      const newAdvice = await getPregnancyAdvice(info.weeks);
-      setAdvice(newAdvice);
+      const data = await getPregnancyAdvice(info.weeks);
+      setAdvice(data);
     } catch (error) {
-      console.error(error);
+      console.error("Failed to fetch advice:", error);
     } finally {
       setLoadingAdvice(false);
     }
   };
 
   return (
-    <div className="min-h-screen pb-20 px-4 md:px-0">
+    <div className="min-h-screen pb-20 px-4 md:px-0 bg-[#fffafb]">
       {/* Decorative Background Elements */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-pink-100/30 rounded-full blur-3xl animate-pulse"></div>
@@ -76,6 +77,7 @@ const App: React.FC = () => {
           ) : (
             <div className="space-y-8">
               <ResultDisplay info={pregnancyInfo} />
+              {/* Dynamic AI Advice Component */}
               <PregnancyTips advice={advice} loading={loadingAdvice} />
             </div>
           )}
